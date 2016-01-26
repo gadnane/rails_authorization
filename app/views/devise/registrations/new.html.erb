@@ -19,6 +19,10 @@
   </div>
 
   <div class="field">
+  <%= collection_select(:user, :role_id, Role.where("name != 'admin'"), :id, :name, {prompt: true}) %>
+  </div>
+
+  <div class="field">
     <%= f.label :password %>
     <% if @minimum_password_length %>
     <em>(<%= @minimum_password_length %> characters minimum)</em>

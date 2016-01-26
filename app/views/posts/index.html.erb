@@ -17,8 +17,10 @@
         <td><%= post.title %></td>
         <td><%= post.content %></td>
         <td><%= link_to 'Show', post %></td>
-        <% if post.user == current_user %>
+         <% if can? :update, post %>
         <td><%= link_to 'Edit', edit_post_path(post) %></td>
+         <% end %>
+         <% if can? :destroy, post %>
         <td><%= link_to 'Destroy', post, method: :delete, data: { confirm: 'Are you sure?' } %></td>
         <% end %>
       </tr>
@@ -27,6 +29,6 @@
 </table>
 
 <br>
- <% if user_signed_in? %>
+<% if can? :create, Post %>
 <%= link_to 'New Post', new_post_path %>
   <% end %>

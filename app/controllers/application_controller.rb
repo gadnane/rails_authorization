@@ -5,12 +5,17 @@ class ApplicationController < ActionController::Base
   # For APIs, you may want to use :null_session instead.
   protect_from_forgery with: :exception
 
+  rescue_from CanCan::AccessDenied do |exception|
+  flash[:notice] = "You do not have permission to perform this action"
+  redirect_to root_url
+end
+
   protected
 
 #function adds name, and blogInterest to the list of allowed parameters
 #for creating accounts, and updating account information
   def configure_permitted_parameters
-     devise_parameter_sanitizer.for(:sign_up) << [:name, :blogInterest]
-     devise_parameter_sanitizer.for(:account_update) << [:name, :blogInterest]
+     devise_parameter_sanitizer.for(:sign_up) << [:name, :blogInterest, :role_id]
+     devise_parameter_sanitizer.for(:account_update) << [:name, :blogInterest, :role_id]
   end
 end
